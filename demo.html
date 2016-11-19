@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- Bootstrap Core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+<!-- Plugin CSS -->
+<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+<link rel="stylesheet" href="vendor/device-mockups/device-mockups.min.css">
+
+<!-- Theme CSS -->
+<link href="css/new-age.css" rel="stylesheet">
+
+<html>
+  <head>
+    <title>Drawing tools</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        position: absolute;
+        right: 0px;
+        height: 100%;
+        width: 50%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <div style="width: 100%;overflow:auto;">
+  <body>
+    <div id="map"; style="float:right; width:65%" >
+    <script>
+      // This example requires the Drawing library. Include the libraries=drawing
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=drawing"> 
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: {lat: 52.128882, lng: 5.0463768},
+          mapTypeId: 'hybrid'
+        });
+
+
+        var drawingManager = new google.maps.drawing.DrawingManager({
+          drawingMode: google.maps.drawing.OverlayType.MARKER,
+          drawingControl: true,
+          drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: ['marker','circle']
+          },
+          markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+          circleOptions: {
+            fillColor: '#fdc752',
+            fillOpacity: 0.4,
+            strokeWeight: 1,
+            clickable: true,
+            editable: true,
+            zIndex: 1
+          }
+
+
+        });
+        drawingManager.setMap(map);
+        
+        function placeMarker(location) {
+          if ( marker ) {
+            marker.setPosition(location);
+          } else {
+            marker = new google.maps.Marker({
+              position: location,
+              map: map
+            });
+          }
+          var p = marker.getPosition();
+              alert(p);
+        }
+      
+      google.maps.event.addListener(drawingManager, 'markercomplete', function(marker) {
+        
+              placeMarker(event.latLng);
+              alert("here");
+              
+          });
+
+      }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7m2ERuZTDXYe2s6Iy4xJ9vPTdvY5f6_o&libraries=drawing&callback=initMap"
+         async defer></script>
+    </div>
+         
+
+<div style="float: left; width: 35%; padding: 5%;background: url(../img/bg-pattern.png), linear-gradient(to left, #fdc752,#fda552)">
+<form id="myform">
+  <div class="header-content-inner"; align="center">
+      <h1 style="color:white;">Create a Trove.</h1>
+  </div>
+  <div class="form-group" >
+    <label for="companyLogo" style="color:white;">Company Logo</label>
+    <input type="file" class="form-control-file" id="companyLogo">
+  </div>
+  <div class="form-group">
+    <label style="color:white;" for="companyName">Company Name</label>
+    <input type="name" class="form-control" id="companyName" placeholder="Enter company name">
+  </div>
+  <div class="form-group">
+    <label style="color:white;" for="rewardImage">Reward Image</label>
+    <input type="file" class="form-control-file" id="rewardImage">
+  </div>
+  <div class="form-group">
+    <label style="color:white;" for="rewardDescription">Reward Description</label>
+    <textarea class="form-control" id="descArea" rows="3" placeholder="Describe the reward here"></textarea>
+  </div>
+  <div class="form-group">
+    <label style="color:white;" for="quantity">Quantity</label>
+    <input type="number" class="form-control" id="quantity" placeholder="Enter reward quantity">
+  </div>
+  <fieldset class="form-group">
+    <legend style="color:white;">Region options</legend>
+    <div class="form-check">
+      <label class="form-check-label" style="color:white;">
+        <input type="radio"  class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+        GPS enabled region
+      </label>
+    </div>
+    <div class="form-check">
+    <label class="form-check-label" style="color:white;">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+        iBeacon enabled region
+      </label>
+    </div>
+  </fieldset>
+    <script type="text/javascript">
+  function submitform()
+  {
+    document.myform.submit();
+  }
+  </script>
+  <button style = "float: right" type="submit" class="btn btn-primary" onclick="submitform()">Submit</button>
+</form>
+  </body>
+   </div>
+</div>
+</html>
